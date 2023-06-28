@@ -16,6 +16,7 @@ interface ApiCall {
 
     @GET(io.drdroid.tipcalculator.data.remote.ApiDetails.SEARCH_ANIME)
     suspend fun searchAnime(
+        @Query("sfw") sfw: Boolean? = null,
         @Query("page") page: Int = 1,
         @Query("q") q: String = "",
     ): io.drdroid.tipcalculator.data.AnimeSearch
