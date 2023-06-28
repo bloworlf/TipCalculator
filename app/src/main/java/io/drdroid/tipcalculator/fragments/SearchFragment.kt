@@ -53,6 +53,9 @@ class SearchFragment : BaseFragment() {
 
         val edSearch: EditText = bind.search
         val switch: SwitchCompat = bind.sfw
+        switch.setOnCheckedChangeListener { compoundButton, checked ->
+            adapter.filter.filter(checked.toString())
+        }
 
         recyclerView = bind.recyclerView
         manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -148,8 +151,7 @@ class SearchFragment : BaseFragment() {
         CoroutineScope(Dispatchers.Main).launch {
             search = io.drdroid.tipcalculator.data.remote.ApiDetails.apiClient.searchAnime(
                 q = q,
-                page = page,
-                sfw = sfw ?: sfw
+                page = page
             )
 
             if (page == 1 && animeList.size > 0) {

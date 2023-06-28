@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:elevation="3dp"
-    android:maxHeight="400dp"
     app:cardCornerRadius="10dp">
 
     <LinearLayout
@@ -13,24 +12,25 @@
         android:layout_height="wrap_content"
         android:divider="@drawable/horizontal_line"
         android:orientation="vertical"
-        android:showDividers="middle"
-        android:weightSum="6">
+        android:showDividers="middle">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_weight="5"
+            android:maxHeight="400dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_margin="8dp"
             android:text="Title"
+            android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold" />
 

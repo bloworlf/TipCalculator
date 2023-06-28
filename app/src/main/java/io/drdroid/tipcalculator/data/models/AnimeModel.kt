@@ -41,7 +41,7 @@ data class AnimeModel(
     @SerializedName("rank")
     val rank: Int?,
     @SerializedName("rating")
-    val rating: String?,
+    val rating: String,
     @SerializedName("score")
     val score: Double?,
     @SerializedName("scored_by")
