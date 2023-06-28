@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/dashboard_menu">
+
+    <fragment
+        android:id="@+id/dashboard_menu"
+        android:name="io.drdroid.tipcalculator.fragments.DashboardFragment"
+        android:label="Dashboard"/>
+    <fragment
+        android:id="@+id/categories_menu"
+        android:name="io.drdroid.tipcalculator.fragments.CategoriesFragment"
+        android:label="Categories" />
+    <fragment
+        android:id="@+id/search_menu"
+        android:name="io.drdroid.tipcalculator.fragments.SearchFragment"
+        android:label="Search" />
+</navigation>

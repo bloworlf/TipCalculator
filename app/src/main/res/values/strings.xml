@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tip Calculator</string>
+    <string name="hello_dashboard_fragment">Hello Dashboard Fragment</string>
+    <string name="random_anime">Random Anime</string>
+</resources>
