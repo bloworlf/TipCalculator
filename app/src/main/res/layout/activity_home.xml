@@ -32,12 +32,14 @@
             app:navGraph="@navigation/navigation_home" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btmNavView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/menu_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

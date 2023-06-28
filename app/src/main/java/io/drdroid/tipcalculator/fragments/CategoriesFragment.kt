@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.drdroid.tipcalculator.adapters.GenreAdapter
-import io.drdroid.tipcalculator.data.AnimeGenre
-import io.drdroid.tipcalculator.data.remote.ApiDetails
 import io.drdroid.tipcalculator.base.BaseFragment
+import io.drdroid.tipcalculator.data.AnimeGenre
 import io.drdroid.tipcalculator.databinding.FragmentCategoriesBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 class CategoriesFragment : BaseFragment() {
 
     lateinit var bind: FragmentCategoriesBinding
-    var genre: io.drdroid.tipcalculator.data.AnimeGenre =
-        io.drdroid.tipcalculator.data.AnimeGenre(listOf())
+    var genre: AnimeGenre =
+        AnimeGenre(listOf())
 
     private lateinit var recyclerView: RecyclerView
-    lateinit var adapter: io.drdroid.tipcalculator.adapters.GenreAdapter
-    lateinit var manager: GridLayoutManager
+    lateinit var adapter: GenreAdapter
+    lateinit var manager: StaggeredGridLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class CategoriesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = bind.recyclerView
-        manager = GridLayoutManager(this@CategoriesFragment.requireContext(), 2)
+        manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.orientation = GridLayoutManager.VERTICAL
 //        adapter = GenreAdapter(this@CategoriesFragment.requireContext(), genre.data)
 //        recyclerView.adapter = adapter
