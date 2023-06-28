@@ -7,7 +7,7 @@ data class AiredModel(
     @SerializedName("from")
     val from: String?,
     @SerializedName("prop")
-    val prop: io.drdroid.tipcalculator.data.models.PropModel?,
+    val prop: PropModel?,
     @SerializedName("to")
     val to: String?
 )

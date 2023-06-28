@@ -6,5 +6,5 @@ import io.drdroid.tipcalculator.data.models.GenreModel
 
 data class AnimeGenre(
     @SerializedName("data")
-    val data: List<io.drdroid.tipcalculator.data.models.GenreModel>
+    val data: List<GenreModel>
 )

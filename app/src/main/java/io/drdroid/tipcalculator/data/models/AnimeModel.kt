@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AnimeModel(
     @SerializedName("aired")
-    val aired: io.drdroid.tipcalculator.data.models.AiredModel?,
+    val aired: AiredModel?,
     @SerializedName("airing")
     val airing: Boolean?,
     @SerializedName("approved")
@@ -13,23 +13,23 @@ data class AnimeModel(
     @SerializedName("background")
     val background: String?,
     @SerializedName("broadcast")
-    val broadcast: io.drdroid.tipcalculator.data.models.BroadcastModel?,
+    val broadcast: BroadcastModel?,
     @SerializedName("demographics")
-    val demographics: List<io.drdroid.tipcalculator.data.models.DemographicModel?>?,
+    val demographics: List<DemographicModel?>?,
     @SerializedName("duration")
     val duration: String?,
     @SerializedName("episodes")
     val episodes: Int?,
     @SerializedName("explicit_genres")
-    val explicitGenres: List<io.drdroid.tipcalculator.data.models.ExplicitGenreModel?>?,
+    val explicitGenres: List<ExplicitGenreModel?>?,
     @SerializedName("favorites")
     val favorites: Int?,
     @SerializedName("genres")
-    val genres: List<io.drdroid.tipcalculator.data.models.GenreModel?>?,
+    val genres: List<GenreModel?>?,
     @SerializedName("images")
-    val images: io.drdroid.tipcalculator.data.models.ImagesModel?,
+    val images: ImagesModel?,
     @SerializedName("licensors")
-    val licensors: List<io.drdroid.tipcalculator.data.models.LicensorModel?>?,
+    val licensors: List<LicensorModel?>?,
     @SerializedName("mal_id")
     val malId: Int?,
     @SerializedName("members")
@@ -37,7 +37,7 @@ data class AnimeModel(
     @SerializedName("popularity")
     val popularity: Int?,
     @SerializedName("producers")
-    val producers: List<io.drdroid.tipcalculator.data.models.ProducerModel?>?,
+    val producers: List<ProducerModel?>?,
     @SerializedName("rank")
     val rank: Int?,
     @SerializedName("rating")
@@ -53,11 +53,11 @@ data class AnimeModel(
     @SerializedName("status")
     val status: String?,
     @SerializedName("studios")
-    val studios: List<io.drdroid.tipcalculator.data.models.StudioModel?>?,
+    val studios: List<StudioModel?>?,
     @SerializedName("synopsis")
     val synopsis: String?,
     @SerializedName("themes")
-    val themes: List<io.drdroid.tipcalculator.data.models.ThemeModel?>?,
+    val themes: List<ThemeModel?>?,
     @SerializedName("title")
     val title: String?,
     @SerializedName("title_english")
@@ -67,9 +67,9 @@ data class AnimeModel(
     @SerializedName("title_synonyms")
     val titleSynonyms: List<String?>?,
     @SerializedName("titles")
-    val titles: List<io.drdroid.tipcalculator.data.models.TitleModel?>?,
+    val titles: List<TitleModel?>?,
     @SerializedName("trailer")
-    val trailer: io.drdroid.tipcalculator.data.models.TrailerModel?,
+    val trailer: TrailerModel?,
     @SerializedName("type")
     val type: String?,
     @SerializedName("url")

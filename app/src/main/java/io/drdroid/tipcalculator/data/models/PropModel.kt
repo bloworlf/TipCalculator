@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class PropModel(
     @SerializedName("from")
-    val from: io.drdroid.tipcalculator.data.models.FromModel?,
+    val from: FromModel?,
     @SerializedName("string")
     val string: String?,
     @SerializedName("to")
-    val to: io.drdroid.tipcalculator.data.models.ToModel?
+    val to: ToModel?
 )

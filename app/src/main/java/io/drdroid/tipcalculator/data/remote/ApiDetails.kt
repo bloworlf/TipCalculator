@@ -10,11 +10,11 @@ object ApiDetails {
     private const val BASE_URL: String = "https://api.jikan.moe/"
     private const val API_VERSION: String = "v4"
 
-    private const val API_URL = "${io.drdroid.tipcalculator.data.remote.ApiDetails.BASE_URL}${io.drdroid.tipcalculator.data.remote.ApiDetails.API_VERSION}/"
+    private const val API_URL = "${BASE_URL}${API_VERSION}/"
 
-    const val RANDOM_ANIME = io.drdroid.tipcalculator.data.remote.ApiDetails.API_URL + "random/anime/"
-    const val GENRE_ANIME = io.drdroid.tipcalculator.data.remote.ApiDetails.API_URL + "genres/anime"
-    const val SEARCH_ANIME = io.drdroid.tipcalculator.data.remote.ApiDetails.API_URL + "anime"
+    const val RANDOM_ANIME = API_URL + "random/anime/"
+    const val GENRE_ANIME = API_URL + "genres/anime"
+    const val SEARCH_ANIME = API_URL + "anime"
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor()
@@ -23,10 +23,10 @@ object ApiDetails {
             })
         .build()
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(io.drdroid.tipcalculator.data.remote.ApiDetails.API_URL)
+        .baseUrl(API_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(io.drdroid.tipcalculator.data.remote.ApiDetails.okHttpClient)
+        .client(okHttpClient)
         .build()
-    val apiClient: io.drdroid.tipcalculator.data.remote.ApiCall = io.drdroid.tipcalculator.data.remote.ApiDetails.retrofit.create(
-        io.drdroid.tipcalculator.data.remote.ApiCall::class.java)
+    val apiClient: ApiCall = retrofit.create(
+        ApiCall::class.java)
 }

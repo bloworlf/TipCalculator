@@ -22,7 +22,7 @@ import java.util.Objects
 class AnimeAdapter(val context: Context, var data: List<AnimeModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>()/*, Filterable*/ {
 
-    var filteredData: List<AnimeModel> = data
+//    var filteredData: List<AnimeModel> = data
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
