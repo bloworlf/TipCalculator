@@ -10,7 +10,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.widget.SwitchCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.drdroid.tipcalculator.adapters.AnimeAdapter
@@ -27,7 +26,7 @@ class SearchFragment : BaseFragment() {
     lateinit var bind: FragmentSearchBinding
     lateinit var search: AnimeSearch
     private var animeList: MutableList<AnimeModel> = mutableListOf()
-    lateinit var manager: GridLayoutManager
+    lateinit var manager: StaggeredGridLayoutManager
     lateinit var adapter: AnimeAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -56,21 +55,51 @@ class SearchFragment : BaseFragment() {
         val switch: SwitchCompat = bind.sfw
 
         recyclerView = bind.recyclerView
-//        manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        manager = GridLayoutManager(this@SearchFragment.requireContext(), 2)
+        manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//        manager = GridLayoutManager(this@SearchFragment.requireContext(), 2)
         recyclerView.layoutManager = manager
         adapter = AnimeAdapter(this@SearchFragment.requireContext(), animeList)
         recyclerView.adapter = adapter
+//        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                val visibleItemCount = manager.childCount
+//                val pastVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
+//                val total = adapter.itemCount
+//
+//
+//                if (!isLoading && hasMore) {
+//
+//                    if ((visibleItemCount + pastVisibleItem) >= total) {
+//                        isLoading = true
+//                        page++
+//                        searchAnime(
+//                            q = q,
+//                            page = page,
+//                            sfw = if (switch.isChecked) {
+//                                true
+//                            } else {
+//                                null
+//                            }
+//                        )
+//                    }
+//                }
+////                super.onScrolled(recyclerView, dx, dy)
+//            }
+//        })
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val visibleItemCount = manager.childCount
-                val pastVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
-                val total = adapter.itemCount
+                val firstVisibleItems: IntArray = IntArray(manager.spanCount)
+                val firstVisibleItem =
+                    manager.findFirstCompletelyVisibleItemPositions(firstVisibleItems)
+                val totalItemCount = adapter.itemCount
+
+                var pastVisibleItems = firstVisibleItems[0]
 
 
                 if (!isLoading && hasMore) {
-
-                    if ((visibleItemCount + pastVisibleItem) >= total) {
+                    if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+//                    if ((visibleItemCount + pastVisibleItem) >= total) {
                         isLoading = true
                         page++
                         searchAnime(
@@ -87,6 +116,7 @@ class SearchFragment : BaseFragment() {
 //                super.onScrolled(recyclerView, dx, dy)
             }
         })
+
         recyclerView.itemAnimator = LandingAnimator()
 
         edSearch.setOnEditorActionListener { textView, actionId, event ->

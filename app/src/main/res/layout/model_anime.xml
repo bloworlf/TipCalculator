@@ -2,23 +2,26 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     android:elevation="3dp"
+    android:maxHeight="400dp"
     app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider=""
+        android:layout_height="wrap_content"
+        android:divider="@drawable/horizontal_line"
         android:orientation="vertical"
         android:showDividers="middle"
-        android:weightSum="10">
+        android:weightSum="6">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
@@ -28,7 +31,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="Title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
