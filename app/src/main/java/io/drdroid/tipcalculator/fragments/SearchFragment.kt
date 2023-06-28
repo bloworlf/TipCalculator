@@ -53,9 +53,24 @@ class SearchFragment : BaseFragment() {
 
         val edSearch: EditText = bind.search
         val switch: SwitchCompat = bind.sfw
-//        switch.setOnCheckedChangeListener { compoundButton, checked ->
+        switch.setOnCheckedChangeListener { compoundButton, checked ->
 //            adapter.filter.filter(checked.toString())
-//        }
+            if (!q.isEmpty() || edSearch.text.isNullOrEmpty()) {
+                return@setOnCheckedChangeListener
+            }
+            q = edSearch.text.toString()
+            isLoading = true
+            page = 1
+            searchAnime(
+                q = q,
+                page = page,
+                sfw = if (checked) {
+                    true
+                } else {
+                    null
+                }
+            )
+        }
 
         recyclerView = bind.recyclerView
         manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
