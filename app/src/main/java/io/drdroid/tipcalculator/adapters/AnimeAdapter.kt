@@ -13,7 +13,9 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import io.drdroid.tipcalculator.R
+import io.drdroid.tipcalculator.activities.Anime
 import io.drdroid.tipcalculator.data.models.AnimeModel
 import io.drdroid.tipcalculator.holders.AnimeHolder
 import java.util.Objects
@@ -47,7 +49,10 @@ class AnimeAdapter(val context: Context, var data: List<AnimeModel>) :
         animeHolder.episodes.text = anime.episodes.toString()
 
         animeHolder.itemView.setOnClickListener {
-            openUrl(anime.url)
+//            openUrl(anime.url)
+            var intent = Intent(context, Anime::class.java)
+            intent.putExtra("anime", Gson().toJson(anime))
+            context.startActivity(intent)
         }
     }
 
