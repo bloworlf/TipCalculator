@@ -7,16 +7,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.drdroid.tipcalculator.adapters.GenreAdapter
+import io.drdroid.tipcalculator.adapters.RecyclerViewDataObserver
 import io.drdroid.tipcalculator.base.BaseFragment
 import io.drdroid.tipcalculator.data.AnimeGenre
+import io.drdroid.tipcalculator.data.models.GenreModel
+import io.drdroid.tipcalculator.data.remote.ApiCall
 import io.drdroid.tipcalculator.data.remote.ApiDetails
 import io.drdroid.tipcalculator.databinding.FragmentCategoriesBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CategoriesFragment : BaseFragment() {
+
+    @Inject
+    lateinit var apiCall: ApiCall
 
     private val id: Int = CategoriesFragment::class.java.hashCode()
 
@@ -36,13 +45,21 @@ class CategoriesFragment : BaseFragment() {
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            genre = ApiDetails.apiClient.getGenres()
+            try {
+                if (genre.data.isEmpty()) {
+                    genre = apiCall.getGenres()
+                }
+                adapter = GenreAdapter(
+                    this@CategoriesFragment.requireContext(),
+                    genre.data
+                )
+                recyclerView.adapter = adapter
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
 //            adapter.notifyDataSetChanged()
-            adapter = GenreAdapter(
-                this@CategoriesFragment.requireContext(),
-                genre.data
-            )
-            recyclerView.adapter = adapter
+
 //            genre.data?.forEach {
 //                println(it?.url)
 //            }
@@ -71,6 +88,30 @@ class CategoriesFragment : BaseFragment() {
 //        adapter = GenreAdapter(this@CategoriesFragment.requireContext(), genre.data)
 //        recyclerView.adapter = adapter
         recyclerView.layoutManager = manager
+//        if (this::adapter.isInitialized) {
+//            adapter.registerAdapterDataObserver(
+//                RecyclerViewDataObserver(
+//                    recyclerView,
+//                    bind.emptyParent.empty
+//                )
+//            )
+//        }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+//        super.storeData(id, genre.data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//        if (genre.data.isEmpty()) {
+//            super.restoreData(id)?.let {
+//                genre = AnimeGenre(super.restoreData(id) as List<GenreModel>)
+//            }
+//        }
     }
 }

@@ -9,14 +9,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import io.drdroid.tipcalculator.base.BaseFragment
 import io.drdroid.tipcalculator.data.Anime
+import io.drdroid.tipcalculator.data.remote.ApiCall
 import io.drdroid.tipcalculator.databinding.FragmentDashboardBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DashboardFragment : BaseFragment() {
+
+    @Inject
+    lateinit var apiCall: ApiCall
 
     private val id: Int = DashboardFragment::class.java.hashCode()
 
@@ -60,7 +67,7 @@ class DashboardFragment : BaseFragment() {
 
     private fun displayRandomAnime(imageView: ImageView, title: TextView) {
         CoroutineScope(Dispatchers.Main).launch {
-            anime = io.drdroid.tipcalculator.data.remote.ApiDetails.apiClient.getRandomAnime()
+            anime = apiCall.getRandomAnime()
 
             title.text = anime.data?.title
 

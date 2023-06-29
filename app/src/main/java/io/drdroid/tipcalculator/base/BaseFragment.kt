@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment : Fragment() {
 
-    private lateinit var bindings: MutableMap<Int, Any>
+    companion object Foo{
+        private var bindings: MutableMap<Int, Any> = mutableMapOf()
+//        private var dataSet: MutableMap<Int, List<Any>> = mutableMapOf()
+    }
 
     fun storeRootView(id: Int, binding: Any) {
         if (id in bindings) {
@@ -22,10 +25,16 @@ abstract class BaseFragment : Fragment() {
         return bindings[id]
     }
 
+//    fun storeData(id: Int, data: List<Any>) {
+//        dataSet[id] = data
+//    }
+
+//    fun restoreData(id: Int): List<Any>? {
+//        return dataSet[id]
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        bindings = mutableMapOf()
     }
 
     override fun onCreateView(

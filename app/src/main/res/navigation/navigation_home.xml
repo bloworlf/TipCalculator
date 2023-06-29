@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/dashboard_menu"
         android:name="io.drdroid.tipcalculator.fragments.DashboardFragment"
-        android:label="Dashboard"/>
+        android:label="Dashboard" />
     <fragment
         android:id="@+id/categories_menu"
         android:name="io.drdroid.tipcalculator.fragments.CategoriesFragment"
@@ -15,5 +15,13 @@
     <fragment
         android:id="@+id/search_menu"
         android:name="io.drdroid.tipcalculator.fragments.SearchFragment"
-        android:label="Search" />
+        android:label="Search">
+        <action
+            android:id="@+id/anime_details"
+            app:destination="@id/animeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/animeDetailsFragment"
+        android:name="io.drdroid.tipcalculator.fragments.AnimeDetailsFragment"
+        android:label="AnimeDetailsFragment" />
 </navigation>

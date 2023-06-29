@@ -10,19 +10,29 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.widget.SwitchCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import io.drdroid.tipcalculator.R
+import io.drdroid.tipcalculator.activities.Home
 import io.drdroid.tipcalculator.adapters.AnimeAdapter
 import io.drdroid.tipcalculator.base.BaseFragment
 import io.drdroid.tipcalculator.data.AnimeSearch
 import io.drdroid.tipcalculator.data.models.AnimeModel
+import io.drdroid.tipcalculator.data.remote.ApiCall
 import io.drdroid.tipcalculator.databinding.FragmentSearchBinding
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment() {
+
+    @Inject
+    lateinit var apiCall: ApiCall
 
     private val id: Int = SearchFragment::class.java.hashCode()
 
@@ -90,8 +100,14 @@ class SearchFragment : BaseFragment() {
         if (!this::animeList.isInitialized) {
             animeList = mutableListOf()
         }
-        adapter = AnimeAdapter(this@SearchFragment.requireContext(), animeList)
+        adapter = AnimeAdapter(this@SearchFragment.requireContext(), animeList, findNavController())
         recyclerView.adapter = adapter
+//        adapter.registerAdapterDataObserver(
+//            RecyclerViewDataObserver(
+//                recyclerView,
+//                bind.emptyParent.root
+//            )
+//        )
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -153,7 +169,7 @@ class SearchFragment : BaseFragment() {
 
     private fun searchAnime(q: String, page: Int, sfw: Boolean?) {
         CoroutineScope(Dispatchers.Main).launch {
-            search = io.drdroid.tipcalculator.data.remote.ApiDetails.apiClient.searchAnime(
+            search = apiCall.searchAnime(
                 q = q,
                 page = page,
                 sfw = sfw ?: sfw
