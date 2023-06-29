@@ -49,10 +49,10 @@ class AnimeAdapter(val context: Context, var data: List<AnimeModel>) :
         animeHolder.episodes.text = anime.episodes.toString()
 
         animeHolder.itemView.setOnClickListener {
-//            openUrl(anime.url)
-            var intent = Intent(context, Anime::class.java)
-            intent.putExtra("anime", Gson().toJson(anime))
-            context.startActivity(intent)
+            openUrl(anime.url)
+//            var intent = Intent(context, Anime::class.java)
+//            intent.putExtra("anime", Gson().toJson(anime))
+//            context.startActivity(intent)
         }
     }
 

@@ -9,9 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.bumptech.glide.Glide
-import io.drdroid.tipcalculator.data.Anime
-import io.drdroid.tipcalculator.data.remote.ApiDetails
 import io.drdroid.tipcalculator.base.BaseFragment
+import io.drdroid.tipcalculator.data.Anime
 import io.drdroid.tipcalculator.databinding.FragmentDashboardBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +18,17 @@ import kotlinx.coroutines.launch
 
 class DashboardFragment : BaseFragment() {
 
+    private val id: Int = DashboardFragment::class.java.hashCode()
+
     lateinit var bind: FragmentDashboardBinding
-    lateinit var anime: io.drdroid.tipcalculator.data.Anime
+    private lateinit var anime: Anime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        super.restoreRootView(id)?.let {
+            bind = super.restoreRootView(id) as FragmentDashboardBinding
+        }
     }
 
     override fun onCreateView(
@@ -31,7 +36,11 @@ class DashboardFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = FragmentDashboardBinding.inflate(inflater, container, false)
+        if (!this::bind.isInitialized) {
+            bind = FragmentDashboardBinding.inflate(inflater, container, false)
+
+            super.storeRootView(id, bind)
+        }
         return bind.root
     }
 
@@ -46,7 +55,7 @@ class DashboardFragment : BaseFragment() {
             displayRandomAnime(imageView, title)
         }
 
-        displayRandomAnime(imageView, title)
+//        displayRandomAnime(imageView, title)
     }
 
     private fun displayRandomAnime(imageView: ImageView, title: TextView) {

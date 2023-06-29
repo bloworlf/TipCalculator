@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.drdroid.tipcalculator.adapters.GenreAdapter
 import io.drdroid.tipcalculator.base.BaseFragment
 import io.drdroid.tipcalculator.data.AnimeGenre
+import io.drdroid.tipcalculator.data.remote.ApiDetails
 import io.drdroid.tipcalculator.databinding.FragmentCategoriesBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CategoriesFragment : BaseFragment() {
+
+    private val id: Int = CategoriesFragment::class.java.hashCode()
 
     lateinit var bind: FragmentCategoriesBinding
     var genre: AnimeGenre =
@@ -28,10 +31,14 @@ class CategoriesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        super.restoreRootView(id)?.let {
+            bind = super.restoreRootView(id) as FragmentCategoriesBinding
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
-            genre = io.drdroid.tipcalculator.data.remote.ApiDetails.apiClient.getGenres()
+            genre = ApiDetails.apiClient.getGenres()
 //            adapter.notifyDataSetChanged()
-            adapter = io.drdroid.tipcalculator.adapters.GenreAdapter(
+            adapter = GenreAdapter(
                 this@CategoriesFragment.requireContext(),
                 genre.data
             )
@@ -47,7 +54,11 @@ class CategoriesFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = FragmentCategoriesBinding.inflate(layoutInflater, container, false)
+        if (!this::bind.isInitialized) {
+            bind = FragmentCategoriesBinding.inflate(inflater, container, false)
+
+            super.storeRootView(id, bind)
+        }
         return bind.root
     }
 

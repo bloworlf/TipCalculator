@@ -23,9 +23,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragment() {
+
+    private val id: Int = SearchFragment::class.java.hashCode()
+
     lateinit var bind: FragmentSearchBinding
     lateinit var search: AnimeSearch
-    private var animeList: MutableList<AnimeModel> = mutableListOf()
+    private lateinit var animeList: MutableList<AnimeModel>
     lateinit var manager: StaggeredGridLayoutManager
     lateinit var adapter: AnimeAdapter
     private lateinit var recyclerView: RecyclerView
@@ -37,6 +40,10 @@ class SearchFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        super.restoreRootView(id)?.let {
+            bind = super.restoreRootView(id) as FragmentSearchBinding
+        }
     }
 
     override fun onCreateView(
@@ -44,7 +51,11 @@ class SearchFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = FragmentSearchBinding.inflate(inflater, container, false)
+        if (!this::bind.isInitialized) {
+            bind = FragmentSearchBinding.inflate(inflater, container, false)
+
+            super.storeRootView(id, bind)
+        }
         return bind.root
     }
 
@@ -76,6 +87,9 @@ class SearchFragment : BaseFragment() {
         manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 //        manager = GridLayoutManager(this@SearchFragment.requireContext(), 2)
         recyclerView.layoutManager = manager
+        if (!this::animeList.isInitialized) {
+            animeList = mutableListOf()
+        }
         adapter = AnimeAdapter(this@SearchFragment.requireContext(), animeList)
         recyclerView.adapter = adapter
 
@@ -168,7 +182,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
